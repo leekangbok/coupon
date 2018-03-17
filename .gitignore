@@ -1,0 +1,7 @@
+.classpath
+.project
+.settings/
+.vertx/
+*.class
+src/main/resources/webroot/
+target/classes/

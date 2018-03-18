@@ -10,12 +10,12 @@ import io.vertx.core.Future;
 import io.vertx.core.MultiMap;
 import io.vertx.core.eventbus.DeliveryOptions;
 import io.vertx.core.http.HttpServer;
-import io.vertx.core.http.HttpServerResponse;
 import io.vertx.core.json.Json;
 import io.vertx.core.json.JsonObject;
 import io.vertx.ext.web.Router;
 import io.vertx.ext.web.RoutingContext;
-import io.vertx.ext.web.handler.*;
+import io.vertx.ext.web.handler.BodyHandler;
+import io.vertx.ext.web.handler.StaticHandler;
 
 public class HttpServerVerticle extends AbstractVerticle {
 
@@ -111,16 +111,15 @@ public class HttpServerVerticle extends AbstractVerticle {
 		vertx.eventBus().send(couponDatabaseQueue, request, options, ar -> {
 			if (ar.succeeded()) {
 				JsonObject body = (JsonObject) ar.result().body();
-				HttpServerResponse response = routeContext.response();
 
 				if (body.getString("code", "").equals("NEW")) {
 					DeliveryOptions genIdoptions = new DeliveryOptions().addHeader("action",
 							"gen-id");
-					vertx.eventBus().send(couponIdGenQueue, request, genIdoptions, genIdAr -> {
-						response.end(Json.encodePrettily(genIdAr.result().body()));
+					vertx.eventBus().send(couponIdGenQueue, request, genIdoptions, ret -> {
+						routeContext.response().end(Json.encodePrettily(ret.result().body()));
 					});
 				} else {
-					response.end(Json.encodePrettily(ar.result().body()));
+					routeContext.response().end(Json.encodePrettily(body));
 				}
 			} else {
 				routeContext.fail(ar.cause());

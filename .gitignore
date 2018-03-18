@@ -5,3 +5,4 @@
 *.class
 src/main/resources/webroot/
 target/classes/
+target/

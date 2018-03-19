@@ -11,6 +11,10 @@ client ----> server httpServerVerticle ----> couponVerticle <-------------------
                                                  |                       쿠폰등록 요청 |
                                                  |----> couponIdGenVerticle ----> couponGenVerticle
                                                          
+
+
+httpServerVerticle --> couponVerticle --> couponIdGenVerticle --> couponGenVerticle --> couponVeticle
+
 4. 쿠폰아이디 발행
 - char[] characters = ['0','1','2',...,'a',...,'z','A',....,'Z']
 - sha256(email)->string encode(64byte)->4byte 단위로 hashcode 를 이용해서 character 선택 

@@ -3,9 +3,9 @@
 1. client(vue.js + vuetify.js) <-> server(vert.x)
 2. httpServerVerticle(core 개수) + couponVerticle(1 개) + couponIdGenVerticle(core 개수) + couponGenVerticle(1 개)
 3. vert.x event bus                                                         
+
 client
-   |
-   |                     쿠폰생성확인         쿠폰id생성                쿠폰id등록         쿠폰email+id등록
+   |                    쿠폰생성확인         쿠폰id생성                쿠폰id등록         쿠폰email+id등록
 httpServerVerticle --> couponVerticle --> couponIdGenVerticle --> couponGenVerticle --> couponVeticle
    |                                                                                           |
    |<------------------------------------------------------------------------------------------|

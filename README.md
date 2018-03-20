@@ -21,4 +21,7 @@ httpServerVerticle --> couponVerticle --> couponIdGenVerticle --> couponGenVerti
   3. npm run build
  
  - 서버
-  1. ???
+  1. mvn clean package
+
+6. 실행
+java -jar target\coupon-io-0.0.1-SNAPSHOT-fat.jar

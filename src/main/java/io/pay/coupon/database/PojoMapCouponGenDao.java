@@ -15,7 +15,7 @@ public class PojoMapCouponGenDao implements CouponGenDao {
 	@Override
 	public DaoReturnCodes setCouponId(String couponId) {
 		if (!coupons.add(couponId)) {
-			LOGGER.error("dup coupon id");
+			LOGGER.warn("DUP CouponId: " + couponId);
 			return DaoReturnCodes.EXISTS;
 		}
 		return DaoReturnCodes.NEW;

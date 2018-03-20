@@ -88,8 +88,7 @@ const actions = {
       callback: (resolve, response) => {
         commit(type.LOADING, false)
         commit(type.SNACKBAR, {
-          text: codeToString(response.code),
-          color: codeToColor(response.code),
+          ...codeTo(response.code),
           show: true
         })
         resolve(response)
@@ -98,24 +97,14 @@ const actions = {
   }
 }
 
-function codeToString(code) {
+function codeTo(code) {
   if (code === 'SUCCESS') {
-    return '쿠폰이 발행되었습니다'
+    return {text: '쿠폰이 발행되었습니다', color: 'success'}
   }
-  if (code === 'EXISTS') {
-    return '쿠폰발행이 완료된 이메일 주소입니다'
+  if (code === 'EXISTS' || code === 'DUP') {
+    return {text: '쿠폰발행이 완료된 이메일 주소입니다', color: 'error'}
   }
-  return '잘못된 입력값입니다'
-}
-
-function codeToColor(code) {
-  if (code === 'SUCCESS') {
-    return 'success'
-  }
-  if (code === 'EXISTS') {
-    return 'error'
-  }
-  return 'error'
+  return {text: '잘못된 입력값입니다', color: 'error'}
 }
 
 export default new Vuex.Store({state, mutations, actions, getters, modules: {}})

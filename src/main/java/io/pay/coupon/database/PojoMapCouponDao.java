@@ -42,7 +42,7 @@ public class PojoMapCouponDao implements CouponDao {
 	@Override
 	public DaoReturnCodes setCoupon(String email, String id) {
 		if (coupons.containsKey(email)) {
-			return DaoReturnCodes.EXISTS;
+			return DaoReturnCodes.DUP;
 		}
 
 		Date from = new Date();

@@ -80,8 +80,16 @@ public class CouponIdGenVerticle extends AbstractVerticle {
 					}
 
 					private boolean isSuccess(AsyncResult<Message<JsonObject>> ar) {
-						if (ar.succeeded() && ((JsonObject) ar.result().body()).getString("code")
-								.equals(DaoReturnCodes.SUCCESS.name())) {
+						if (ar.succeeded() && isSuccessCode(
+								((JsonObject) ar.result().body()).getString("code"))) {
+							return true;
+						}
+						return false;
+					}
+
+					private boolean isSuccessCode(String code) {
+						if (code.equals(DaoReturnCodes.SUCCESS.name())
+								|| code.equals(DaoReturnCodes.DUP.name())) {
 							return true;
 						}
 						return false;

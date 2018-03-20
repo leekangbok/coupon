@@ -42,6 +42,7 @@ import {
   mapMutations
 } from 'vuex'
 import type from '@/store/type'
+import _ from 'lodash'
 
 export default {
   name: 'Coupon',
@@ -98,6 +99,28 @@ export default {
           console.log(error)
         })
     },
+    getCoupons: _.debounce(
+      function() {
+        const {
+          page,
+          rowsPerPage
+        } = this.pagination
+        this.loading = true
+        this[type.GET_COUPON]({
+            offset: (page - 1) * rowsPerPage,
+            limit: rowsPerPage
+          })
+          .then(response => {
+            this.totalItems = response.total
+            this.items = response.items
+            this.loading = false
+          })
+          .catch(error => {
+            console.log(error)
+          })
+      },
+      1000
+    ),
     issueCoupon(event) {
       // event.stopPropagation()
       // event.preventDefault()
@@ -131,7 +154,7 @@ export default {
   watch: {
     pagination: {
       handler() {
-        this.fetchCoupon()
+        this.getCoupons()
       },
       deep: true
     }

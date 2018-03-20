@@ -23,5 +23,4 @@ httpServerVerticle --> couponVerticle --> couponIdGenVerticle --> couponGenVerti
  - 서버
   1. mvn clean package
 
-6. 실행
- java -jar target\coupon-io-0.0.1-SNAPSHOT-fat.jar
+6. java -jar target\coupon-io-0.0.1-SNAPSHOT-fat.jar
